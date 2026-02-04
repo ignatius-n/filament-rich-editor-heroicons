@@ -47,7 +47,7 @@
         "test:lint": "./vendor/bin/pint --test",
         "test:refactor": "./vendor/bin/rector --dry-run",
         "test:types": "phpstan analyse",
-        "test:unit": "./vendor/bin/pest --colors=always",
+        "test:unit": "./vendor/bin/pest --colors=always --coverage --parallel --exactly=100.0",
         "test": [
             "@test:lint",
             "@test:refactor",
