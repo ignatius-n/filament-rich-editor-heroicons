@@ -15,11 +15,11 @@ use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Livewire\LivewireServiceProvider;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Oliwol\FilamentRichEditorHeroicons\FilamentRichEditorHeroiconsServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-final class TestCase extends Orchestra
+abstract class TestCase extends Orchestra
 {
     protected function getPackageProviders($app): array
     {
