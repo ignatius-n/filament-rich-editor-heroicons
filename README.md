@@ -1,8 +1,7 @@
 # 🦸 Filament Rich Editor Heroicons
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/oliwol/filament-rich-editor-heroicons.svg?style=flat-square)](https://packagist.org/packages/oliwol/filament-rich-editor-heroicons)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/oliwol/filament-rich-editor-heroicons/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/oliwol/filament-rich-editor-heroicons/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/oliwol/filament-rich-editor-heroicons.svg?style=flat-square)](https://packagist.org/packages/oliwol/filament-rich-editor-heroicons)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/oliwol/filament-rich-editor-heroicons/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/oliwol/filament-rich-editor-heroicons/actions?query=workflow%3Atests+branch%3Amain)
 [![License](https://img.shields.io/packagist/l/oliwol/filament-rich-editor-heroicons.svg?style=flat-square)](https://github.com/oliwol/filament-rich-editor-heroicons/blob/main/LICENSE.md)
 
 A Filament v4/v5 plugin that adds a Heroicon picker to the RichEditor (TipTap). Search and insert any outline Heroicon as an inline SVG directly into the editor content.
