@@ -1,20 +1,23 @@
-# Filament Rich Editor Heroicons
+# 🦸 Filament Rich Editor Heroicons
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/oliwol/filament-rich-editor-heroicons.svg?style=flat-square)](https://packagist.org/packages/oliwol/filament-rich-editor-heroicons)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/oliwol/filament-rich-editor-heroicons/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/oliwol/filament-rich-editor-heroicons/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/oliwol/filament-rich-editor-heroicons.svg?style=flat-square)](https://packagist.org/packages/oliwol/filament-rich-editor-heroicons)
+[![License](https://img.shields.io/packagist/l/oliwol/filament-rich-editor-heroicons.svg?style=flat-square)](https://github.com/oliwol/filament-rich-editor-heroicons/blob/main/LICENSE.md)
 
-A Filament v4/v5 plugin that adds a Heroicon picker to the RichEditor (TipTap). Users can search and insert any outline Heroicon as an inline SVG directly into the editor content.
+A Filament v4/v5 plugin that adds a Heroicon picker to the RichEditor (TipTap). Search and insert any outline Heroicon as an inline SVG directly into the editor content.
 
-## Installation
+---
+
+## 🚀 Installation
+
+Install the package via Composer:
 
 ```bash
 composer require oliwol/filament-rich-editor-heroicons
 ```
 
-## Usage
-
-Add the plugin to your `RichEditor` component and include `addHeroicon` in the toolbar:
+## ⚡️ Quick Start
 
 ```php
 use Filament\Forms\Components\RichEditor;
@@ -26,6 +29,29 @@ RichEditor::make('content')
         'italic',
         'link',
         'addHeroicon',
+    ])
+    ->plugins([
+        FilamentRichEditorHeroicons::make(),
+    ])
+```
+
+## 🛠️ Usage
+
+### Editor Integration
+
+Add ```FilamentRichEditorHeroicons::make()``` to the ```plugins()``` array of your ```RichEditor``` component and include ```addHeroicon``` in the ```toolbarButtons()```:
+
+```php
+use Filament\Forms\Components\RichEditor;
+use Oliwol\FilamentRichEditorHeroicons\FilamentRichEditorHeroicons;
+
+RichEditor::make('content')
+    ->toolbarButtons([
+        'bold',
+        'italic',
+        'underline',
+        'link',
+        'addHeroicon',
         // ... other buttons
     ])
     ->plugins([
@@ -33,7 +59,9 @@ RichEditor::make('content')
     ])
 ```
 
-When rendering stored content (e.g. in a model), register the TipTap PHP extension:
+### Rendering Stored Content
+
+When rendering stored content outside the editor (e.g. in a Blade view or model accessor), register the plugin with ```RichContentRenderer```:
 
 ```php
 use Filament\Forms\Components\RichEditor\RichContentRenderer;
@@ -45,37 +73,26 @@ RichContentRenderer::make($this->html)
     ])
 ```
 
-## How it works
+## ⚙️ How it works
 
-Clicking the toolbar button opens a modal with a searchable dropdown of all outline Heroicons. After selecting an icon, it is rendered as an inline SVG element and inserted into the editor content. The icon name is stored as a `data-icon` attribute, and the rendered SVG is stored as `data-svg` for display.
+1. Clicking the toolbar button opens a modal with a searchable dropdown of all outline [Heroicons](https://heroicons.com/).
+2. After selecting an icon, it is rendered as an inline SVG element and inserted into the editor content.
+3. The icon name is stored as a ```data-icon``` attribute, and the rendered SVG is stored as ```data-svg``` for display.
 
-## Translations
+## 🌍 Translations
 
-The package ships with English and German translations. You can publish them to customize:
+The package ships with English and German translations. You can publish and customize them:
 
 ```bash
 php artisan vendor:publish --tag="filament-rich-editor-heroicons-translations"
 ```
 
-## Testing
+## ✅ Testing
 
 ```bash
 composer test
 ```
 
-## Contributing
+## 📄 License
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [Oliver Wolschke](https://github.com/oliwol)
-- [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+This package is open-sourced software licensed under the [MIT license](LICENSE.md).
