@@ -8,6 +8,8 @@
 /node_modules
 /vendor
 Thumbs.db
+composer.lock
 composer.phar
+package-lock.json
 phpstan.neon
 phpunit.xml
