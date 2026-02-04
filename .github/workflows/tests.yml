@@ -1,10 +1,7 @@
-name: composer test
+name: tests
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  pull_request
 
 jobs:
   composer-test:
