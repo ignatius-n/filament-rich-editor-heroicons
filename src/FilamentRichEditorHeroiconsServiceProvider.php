@@ -27,7 +27,7 @@ final class FilamentRichEditorHeroiconsServiceProvider extends PackageServicePro
     {
         FilamentAsset::register(
             [
-                Js::make('filament-rich-editor-heroicons-scripts', __DIR__.'/../resources/dist/filament-rich-editor-heroicons.js'),
+                Js::make('filament-rich-editor-heroicons-scripts', __DIR__.'/../resources/dist/filament-rich-editor-heroicons.js')->module(),
             ],
             'oliwol/filament-rich-editor-heroicons'
         );
