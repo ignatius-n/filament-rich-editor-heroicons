@@ -17,6 +17,7 @@ return [
     'style_label' => 'Stile',
     'style_outline' => 'Contorno',
     'style_solid' => 'Pieno',
+    'style_mini' => 'Mini',
     'size_label' => 'Dimensione',
     'size_sm' => 'S (:pxpx)',
     'size_md' => 'M (:pxpx)',

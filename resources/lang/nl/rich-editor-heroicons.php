@@ -17,6 +17,7 @@ return [
     'style_label' => 'Stijl',
     'style_outline' => 'Omtrek',
     'style_solid' => 'Gevuld',
+    'style_mini' => 'Mini',
     'size_label' => 'Grootte',
     'size_sm' => 'S (:pxpx)',
     'size_md' => 'M (:pxpx)',

@@ -17,6 +17,7 @@ return [
     'style_label' => 'Stil',
     'style_outline' => 'Anahat',
     'style_solid' => 'Dolu',
+    'style_mini' => 'Mini',
     'size_label' => 'Boyut',
     'size_sm' => 'S (:pxpx)',
     'size_md' => 'M (:pxpx)',

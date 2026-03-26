@@ -17,6 +17,7 @@ return [
     'style_label' => '样式',
     'style_outline' => '线框',
     'style_solid' => '实心',
+    'style_mini' => '迷你',
     'size_label' => '大小',
     'size_sm' => 'S (:pxpx)',
     'size_md' => 'M (:pxpx)',
