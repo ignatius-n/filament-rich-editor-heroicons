@@ -2,6 +2,21 @@ import {Node} from '@tiptap/core';
 
 const SIZE_MAP = { sm: 16, md: 24, lg: 32, xl: 48 };
 
+function stripFilamentClasses(el) {
+    const svg = el.querySelector('svg');
+    if (svg) {
+        svg.removeAttribute('class');
+    }
+}
+
+function injectProseMirrorFix() {
+    if (document.getElementById('heroicon-pm-fix')) return;
+    const style = document.createElement('style');
+    style.id = 'heroicon-pm-fix';
+    style.textContent = '.ProseMirror img.ProseMirror-separator { display: inline !important; vertical-align: middle; width: 0; height: 0; } .fi-prose .ProseMirror span[contenteditable="false"] { margin-top: 0 !important; }';
+    document.head.appendChild(style);
+}
+
 function applyAlignment(el, align) {
     el.style.display = 'inline-block';
     el.style.verticalAlign = 'middle';
@@ -26,13 +41,17 @@ function applyAlignment(el, align) {
     }
 }
 
+function applyColor(el, color) {
+    el.style.color = (!color || color === 'currentColor') ? '' : color;
+}
+
 function applySize(el, size) {
     const px = SIZE_MAP[size] || 24;
     const svg = el.querySelector('svg');
     if (svg) {
         svg.style.width = px + 'px';
         svg.style.height = px + 'px';
-        svg.style.verticalAlign = 'middle';
+        svg.style.display = 'block';
     }
 }
 
@@ -95,6 +114,13 @@ export default Node.create({
                     'data-style': attrs.style || 'outline',
                 }),
             },
+            color: {
+                default: '#000000',
+                parseHTML: el => el.getAttribute('data-color') || '#000000',
+                renderHTML: attrs => ({
+                    'data-color': attrs.color || '#000000',
+                }),
+            },
         }
     },
 
@@ -111,8 +137,11 @@ export default Node.create({
             const span = document.createElement('span');
             span.innerHTML = node.attrs.svg || '<span>[Icon SVG missing!]</span>';
 
+            injectProseMirrorFix();
+            stripFilamentClasses(span);
             applyAlignment(span, node.attrs.align || 'inline');
             applySize(span, node.attrs.size || 'md');
+            applyColor(span, node.attrs.color || '#000000');
 
             if (editor.isEditable) {
                 span.style.cursor = 'pointer';

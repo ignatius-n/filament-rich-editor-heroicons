@@ -17,6 +17,7 @@ return [
     'style_label' => 'Stil',
     'style_outline' => 'Umriss',
     'style_solid' => 'Ausgefüllt',
+    'style_mini' => 'Mini',
     'size_label' => 'Größe',
     'size_sm' => 'S (:pxpx)',
     'size_md' => 'M (:pxpx)',

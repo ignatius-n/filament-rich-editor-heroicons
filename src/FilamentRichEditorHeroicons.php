@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Oliwol\FilamentRichEditorHeroicons;
 
 use Filament\Actions\Action;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\RichEditor\EditorCommand;
 use Filament\Forms\Components\RichEditor\Plugins\Contracts\RichContentPlugin;
@@ -33,7 +34,7 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
     private string $defaultSize = 'md';
 
     /** @var array<string> */
-    private array $styles = ['outline', 'solid'];
+    private array $styles = ['outline', 'solid', 'mini'];
 
     public static function make(): self
     {
@@ -42,7 +43,7 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
 
     public static function resolveHeroicon(string $slug, string $style = 'outline'): ?Heroicon
     {
-        if ($style === 'solid') {
+        if ($style === 'solid' || $style === 'mini') {
             return Heroicon::tryFrom($slug);
         }
 
@@ -135,7 +136,7 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
             RichEditorTool::make('addHeroicon')
                 ->label(__('filament-rich-editor-heroicons::rich-editor-heroicons.action_label'))
                 ->action(
-                    arguments: '{ icon: $getEditor().getAttributes(\'heroicon\')?.icon, align: $getEditor().getAttributes(\'heroicon\')?.align, size: $getEditor().getAttributes(\'heroicon\')?.size, style: $getEditor().getAttributes(\'heroicon\')?.style }',
+                    arguments: '{ icon: $getEditor().getAttributes(\'heroicon\')?.icon, align: $getEditor().getAttributes(\'heroicon\')?.align, size: $getEditor().getAttributes(\'heroicon\')?.size, style: $getEditor().getAttributes(\'heroicon\')?.style, color: $getEditor().getAttributes(\'heroicon\')?.color }',
                 )
                 ->icon(Heroicon::OutlinedFaceSmile),
         ];
@@ -157,6 +158,7 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
                     'icon' => $arguments['icon'] ?? null,
                     'align' => $arguments['align'] ?? 'inline',
                     'size' => $arguments['size'] ?? $this->defaultSize,
+                    'color' => $arguments['color'] ?? '#000000',
                 ])
                 ->schema([
                     FusedGroup::make([
@@ -227,6 +229,9 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
                         ->default($this->defaultSize)
                         ->inline()
                         ->grouped(),
+                    ColorPicker::make('color')
+                        ->label(__('filament-rich-editor-heroicons::rich-editor-heroicons.color_label'))
+                        ->default('#000000'),
                 ])
                 ->action(function (array $arguments, array $data, RichEditor $component): void {
                     $iconName = $data['icon'];
@@ -240,8 +245,11 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
                     $size = $data['size'] ?? $this->defaultSize;
                     $px = $this->sizes[$size] ?? 24;
 
+                    $color = $data['color'] ?? '#000000';
+                    $colorStyle = filled($color) ? 'color:'.$color.';' : '';
+
                     $bladeIcon = self::bladeIconName($icon, $style);
-                    $svg = Blade::render('<x-filament::icon icon="'.$bladeIcon.'" style="width:'.$px.'px;height:'.$px.'px;vertical-align:middle" />');
+                    $svg = Blade::render('<x-filament::icon icon="'.$bladeIcon.'" style="'.$colorStyle.'width:'.$px.'px;height:'.$px.'px;vertical-align:middle" />');
 
                     $component->runCommands(
                         commands: [
@@ -256,6 +264,7 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
                                             'align' => $data['align'] ?? 'inline',
                                             'size' => $size,
                                             'style' => $style,
+                                            'color' => $color,
                                         ],
                                     ],
                                 ],
@@ -272,7 +281,7 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
      */
     public function searchIcons(string $search, string $style = 'outline'): array
     {
-        $isOutline = $style !== 'solid';
+        $isOutline = $style === 'outline';
 
         return collect(Heroicon::cases())
             ->filter(fn (Heroicon $icon): bool => $isOutline
@@ -304,7 +313,7 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
 
     public function renderStyleLabel(string $style): string
     {
-        $fallback = $style === 'solid' ? Heroicon::FaceSmile : Heroicon::OutlinedFaceSmile;
+        $fallback = $style === 'outline' ? Heroicon::OutlinedFaceSmile : Heroicon::FaceSmile;
         $bladeIcon = self::bladeIconName($fallback, $style);
         $label = __('filament-rich-editor-heroicons::rich-editor-heroicons.style_'.$style);
 
@@ -320,7 +329,7 @@ final class FilamentRichEditorHeroicons implements RichContentPlugin
         $px = $this->sizes[$value] ?? 24;
 
         $heroicon = $iconSlug ? self::resolveHeroicon($iconSlug, $style) : null;
-        $fallback = $style === 'solid' ? Heroicon::FaceSmile : Heroicon::OutlinedFaceSmile;
+        $fallback = $style === 'outline' ? Heroicon::OutlinedFaceSmile : Heroicon::FaceSmile;
         $filamentIcon = self::bladeIconName($heroicon ?? $fallback, $style);
 
         return Blade::render('<x-filament::icon :icon="$icon" style="width:'.$px.'px;height:'.$px.'px;display:block" />', [

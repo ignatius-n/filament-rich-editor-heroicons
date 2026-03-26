@@ -17,6 +17,7 @@ return [
     'style_label' => 'النمط',
     'style_outline' => 'مخطط',
     'style_solid' => 'مصمت',
+    'style_mini' => 'مصغر',
     'size_label' => 'الحجم',
     'size_sm' => 'S (:pxpx)',
     'size_md' => 'M (:pxpx)',

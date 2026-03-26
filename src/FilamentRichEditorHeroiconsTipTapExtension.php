@@ -41,6 +41,7 @@ final class FilamentRichEditorHeroiconsTipTapExtension extends Node
             'align' => ['default' => 'inline'],
             'size' => ['default' => 'md'],
             'style' => ['default' => 'outline'],
+            'color' => ['default' => '#000000'],
         ];
     }
 
@@ -57,8 +58,11 @@ final class FilamentRichEditorHeroiconsTipTapExtension extends Node
         $size = $node->attrs->size ?? 'md';
         $px = self::sizePixels($size);
 
+        $color = $node->attrs->color ?? '#000000';
+        $colorStyle = $color !== '' ? 'color:'.$color.';' : '';
+
         $bladeIcon = FilamentRichEditorHeroicons::bladeIconName($icon, $style);
-        $svg = Blade::render('<x-filament::icon icon="'.$bladeIcon.'" style="width:'.$px.'px;height:'.$px.'px;display:inline-block;vertical-align:middle" />');
+        $svg = Blade::render('<x-filament::icon icon="'.$bladeIcon.'" style="'.$colorStyle.'width:'.$px.'px;height:'.$px.'px;display:inline-block;vertical-align:middle" />');
 
         $alignmentStyle = self::alignmentStyle($align);
 

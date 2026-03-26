@@ -584,7 +584,7 @@ it('plugin has default styles', function (): void {
     $plugin = FilamentRichEditorHeroicons::make();
 
     expect($plugin->getStyles())
-        ->toBe(['outline', 'solid']);
+        ->toBe(['outline', 'solid', 'mini']);
 });
 
 it('plugin allows custom styles', function (): void {
@@ -643,9 +643,17 @@ it('resolveHeroicon returns solid icon for solid style', function (): void {
         ->and($icon->value)->toBe('academic-cap');
 });
 
+it('resolveHeroicon returns mini icon for mini style', function (): void {
+    $icon = FilamentRichEditorHeroicons::resolveHeroicon('academic-cap', 'mini');
+
+    expect($icon)->not->toBeNull()
+        ->and($icon->value)->toBe('academic-cap');
+});
+
 it('resolveHeroicon returns null for invalid icon', function (): void {
     expect(FilamentRichEditorHeroicons::resolveHeroicon('nonexistent', 'outline'))->toBeNull()
-        ->and(FilamentRichEditorHeroicons::resolveHeroicon('nonexistent', 'solid'))->toBeNull();
+        ->and(FilamentRichEditorHeroicons::resolveHeroicon('nonexistent', 'solid'))->toBeNull()
+        ->and(FilamentRichEditorHeroicons::resolveHeroicon('nonexistent', 'mini'))->toBeNull();
 });
 
 it('bladeIconName returns outline blade name for outline style', function (): void {
@@ -660,6 +668,43 @@ it('bladeIconName returns solid blade name for solid style', function (): void {
     $bladeName = FilamentRichEditorHeroicons::bladeIconName($icon, 'solid');
 
     expect($bladeName)->toBe('heroicon-s-academic-cap');
+});
+
+it('bladeIconName returns mini blade name for mini style', function (): void {
+    $icon = FilamentRichEditorHeroicons::resolveHeroicon('academic-cap', 'mini');
+    $bladeName = FilamentRichEditorHeroicons::bladeIconName($icon, 'mini');
+
+    expect($bladeName)->toBe('heroicon-m-academic-cap');
+});
+
+it('returns mini heroicons when style is mini', function (): void {
+    $results = FilamentRichEditorHeroicons::make()->searchIcons('academic-cap', 'mini');
+
+    expect($results)
+        ->toBeArray()
+        ->not->toBeEmpty()
+        ->toHaveKey('academic-cap');
+});
+
+it('renders style label with icon for mini', function (): void {
+    $plugin = FilamentRichEditorHeroicons::make();
+
+    $label = $plugin->renderStyleLabel('mini');
+
+    expect($label)
+        ->toContain('svg')
+        ->toContain('Mini');
+});
+
+it('renders size label with mini style', function (): void {
+    $plugin = FilamentRichEditorHeroicons::make();
+
+    $label = $plugin->renderSizeLabel('lg', 'academic-cap', 'mini');
+
+    expect($label)
+        ->toContain('svg')
+        ->toContain('width:32px')
+        ->toContain('height:32px');
 });
 
 it('renders option label for solid icon', function (): void {
@@ -985,5 +1030,7 @@ it('loads translations', function (): void {
         ->and(__('filament-rich-editor-heroicons::rich-editor-heroicons.style_outline'))
         ->not->toBe('filament-rich-editor-heroicons::rich-editor-heroicons.style_outline')
         ->and(__('filament-rich-editor-heroicons::rich-editor-heroicons.style_solid'))
-        ->not->toBe('filament-rich-editor-heroicons::rich-editor-heroicons.style_solid');
+        ->not->toBe('filament-rich-editor-heroicons::rich-editor-heroicons.style_solid')
+        ->and(__('filament-rich-editor-heroicons::rich-editor-heroicons.style_mini'))
+        ->not->toBe('filament-rich-editor-heroicons::rich-editor-heroicons.style_mini');
 });

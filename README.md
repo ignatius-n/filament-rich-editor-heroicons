@@ -8,7 +8,7 @@ A Filament v4/v5 plugin that adds a Heroicon picker to the RichEditor (TipTap).
 
 ![Demo](art/demo.gif)
 
-Search and insert any outline Heroicon as an inline SVG directly into the editor content.
+Search and insert Heroicons as inline SVGs directly into the editor content. Supports outline, solid, and mini styles with customizable size, alignment, and color.
 
 ---
 
@@ -76,6 +76,17 @@ RichContentRenderer::make($this->html)
     ])
 ```
 
+### Styles
+
+By default, **outline**, **solid**, and **mini** styles are available. Mini icons use a 20x20 viewport, designed for smaller UI elements.
+
+To restrict to specific styles:
+
+```php
+FilamentRichEditorHeroicons::make()
+    ->styles(['outline', 'solid'])
+```
+
 ### Alignment & Size
 
 The picker modal lets users choose alignment and size for each icon. You can customize the available sizes and default size via the plugin API:
@@ -95,14 +106,23 @@ FilamentRichEditorHeroicons::make()
 
 **Size presets:** S (16px), M (24px, default), L (32px), XL (48px)
 
-Both settings are persisted in the editor content and applied consistently when rendering via `RichContentRenderer`.
+### Color
+
+The picker modal includes a color picker to set the icon color. The default color is `#000000` (black).
+
+### Editing Inserted Icons
+
+Click on any inserted icon in the editor to re-open the picker modal pre-filled with the current settings. Changes update the icon in place.
+
+All settings are persisted in the editor content and applied consistently when rendering via `RichContentRenderer`.
 
 ## ⚙️ How it works
 
-1. Clicking the toolbar button opens a modal with a searchable dropdown of all outline [Heroicons](https://heroicons.com/) with SVG previews.
-2. After selecting an icon, choose an alignment and size.
+1. Clicking the toolbar button opens a modal with a searchable dropdown of [Heroicons](https://heroicons.com/) with SVG previews.
+2. Select a style (outline/solid/mini), alignment, size, and color.
 3. The icon is rendered as an inline SVG element and inserted into the editor content.
-4. The icon name, alignment, and size are stored as `data-icon`, `data-align`, and `data-size` attributes.
+4. Clicking an existing icon re-opens the modal for editing.
+5. All properties are stored as data attributes and applied on render.
 
 ## 🌍 Translations
 
